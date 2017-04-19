@@ -56,7 +56,7 @@ RemoveAllChildren(e);
 d.map(Remake).forEach(function(v){Add(e,v);
 });}
 function Check(){
-fetch(['https://api.github.com/repos/',GetValue('account'),GetValue('repository'),'releases?access_token=',GetValue('token')].join('/')).then(function(response){return response.json();}).then(Update);
+fetch(['https://api.github.com/repos',GetValue('account'),GetValue('repository'),'releases?access_token='+GetValue('token')].join('/')).then(function(response){return response.json();}).then(Update);
 }
 document.getElementById('check').addEventListener('click',Check,false);
 </script>
