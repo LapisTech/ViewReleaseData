@@ -37,7 +37,7 @@ function Analysis(d){
 return d.download_count;
 }
 function Remake(v){
-var a=v.assets.map(Analysis(download_count));
+var a=v.assets.map(Analysis);
 return {t:v.tag_name,d:a};
 }
 function Element(t,v){
@@ -55,9 +55,7 @@ var e=document.getElementById('result');
 RemoveAllChildren(e);
 d.map(Remake).forEach(function(v){Add(e,v);
 });}
-function Check(){
-fetch(['https://api.github.com/repos',GetValue('account'),GetValue('repository'),'releases?access_token='+GetValue('token')].join('/')).then(function(response){return response.json();}).then(Update);
-}
+function Check(){fetch(['https://api.github.com/repos',GetValue('account'),GetValue('repository'),'releases?access_token='+GetValue('token')].join('/')).then(function(response){return response.json();}).then(Update);}
 document.getElementById('check').addEventListener('click',Check,false);
 </script>
 </body>
