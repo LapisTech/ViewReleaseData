@@ -37,7 +37,8 @@ function Analysis(d){
 return d.download_count;
 }
 function Remake(v){
-return {t:v.tag_name,d:v.assets.map(Analysis(download_count));};
+var a=v.assets.map(Analysis(download_count));
+return {t:v.tag_name,d:a};
 }
 function Element(t,v){
 var e=document.createElement(t);
