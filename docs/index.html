@@ -35,7 +35,10 @@ function Element(t,v){var e=document.createElement(t);e.innerHTML=v;return e;}
 function Add(e,v){e.appendChild(Element('dt',v.t));v.d.forEach(function(v){e.appendChild(Element('dd',v));});}
 function Update(d){var e=document.getElementById('result');RemoveAllChildren(e);d.map(Remake).forEach(function(v){Add(e,v);});}
 function Check(){fetch(['https://api.github.com/repos',GetValue('account'),GetValue('repository'),'releases?access_token='+GetValue('token')].join('/')).then(function(response){return response.json();}).then(Update);}
+function SetValue(d){if(d&&d.match(/.+\=.+/)){var v=d.split('=');var e=document.getElementById(v[0]);if(e&&e.tagName==='INPUT'){e.value=v[1];}}}
+function GetQuery(){window.location.search.substring(1).split('&').forEach(SetValue);}
 document.getElementById('check').addEventListener('click',Check,false);
+GetQuery();
 </script>
 </body>
 </html>
