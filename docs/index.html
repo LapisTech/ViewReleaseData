@@ -17,44 +17,23 @@ body{}
 <body>
 <dl>
 	<dt>Account name</dt>
-	<dd><input type="text" id="account" placeholder="NAME"></dd>
+	<dd><input type="text" id="account" placeholder="Account"></dd>
 	<dt>Repository name</dt>
-	<dd><input type="text" id="repository" placeholder="NAME"></dd>
+	<dd><input type="text" id="repository" placeholder="Repository"></dd>
 	<dt>Access token</dt>
-	<dd><input type="text" id="token" placeholder="NAME"></dd>
+	<dd><input type="text" id="token" placeholder="Access token"></dd>
 </dl>
 <button id="check">Check</button>
 <dl id="result">
 </dl>
 <script type="text/javascript">
-function RemoveAllChildren(e){
-for(var child=e.lastChild;child;child=e.lastChild){e.removeChild(child);}
-}
-function GetValue(i){
-return document.getElementById(i).value;
-}
-function Analysis(d){
-return d.download_count;
-}
-function Remake(v){
-var a=v.assets.map(Analysis);
-return {t:v.tag_name,d:a};
-}
-function Element(t,v){
-var e=document.createElement(t);
-e.innerHTML=v;
-return e;
-}
-function Add(e,v){
-e.appendChild(Element('dt',v.t));
-v.d.forEach(function(v){
-e.appendChild(Element('dd',v));
-});}
-function Update(d){
-var e=document.getElementById('result');
-RemoveAllChildren(e);
-d.map(Remake).forEach(function(v){Add(e,v);
-});}
+function RemoveAllChildren(e){for(var child=e.lastChild;child;child=e.lastChild){e.removeChild(child);}}
+function GetValue(i){return document.getElementById(i).value;}
+function Analysis(d){return d.download_count;}
+function Remake(v){var a=v.assets.map(Analysis);return {t:v.tag_name,d:a};}
+function Element(t,v){var e=document.createElement(t);e.innerHTML=v;return e;}
+function Add(e,v){e.appendChild(Element('dt',v.t));v.d.forEach(function(v){e.appendChild(Element('dd',v));});}
+function Update(d){var e=document.getElementById('result');RemoveAllChildren(e);d.map(Remake).forEach(function(v){Add(e,v);});}
 function Check(){fetch(['https://api.github.com/repos',GetValue('account'),GetValue('repository'),'releases?access_token='+GetValue('token')].join('/')).then(function(response){return response.json();}).then(Update);}
 document.getElementById('check').addEventListener('click',Check,false);
 </script>
